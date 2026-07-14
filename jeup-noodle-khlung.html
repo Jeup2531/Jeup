@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ก๋วยเตี๋ยวเจ๊อัพ เมืองขลุง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soy: #3A2418;
+    --ink: #2B2420;
+    --paper: #EDE3D0;
+    --paper-dark: #E2D5BB;
+    --signred: #A23B2E;
+    --signred-dark: #7E2C22;
+    --herb: #6B7654;
+    --herb-light: #8E9A6E;
+    --gold: #C99A4A;
+    --line: rgba(58,36,24,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(169,59,46,0.04), transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(107,118,84,0.05), transparent 45%);
+  }
+  h1,h2,h3,.display{
+    font-family: 'Mitr', sans-serif;
+  }
+  .wrap{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  a{ color: inherit; }
+
+  /* texture strip */
+  .ropestripe{
+    height: 8px;
+    background: repeating-linear-gradient(135deg, var(--signred) 0 10px, var(--gold) 10px 20px);
+    opacity: 0.85;
+  }
+
+  /* HERO — painted wooden signboard */
+  .hero{
+    padding: 64px 0 40px;
+    position: relative;
+  }
+  .signboard{
+    background: var(--soy);
+    border: 6px solid var(--gold);
+    border-radius: 6px;
+    box-shadow:
+      0 10px 0 -2px rgba(0,0,0,0.08),
+      inset 0 0 0 2px rgba(237,227,208,0.08);
+    padding: 48px 40px 40px;
+    text-align: center;
+    position: relative;
+    transform: rotate(-0.4deg);
+  }
+  .signboard::before, .signboard::after{
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.4) inset;
+    top: 14px;
+  }
+  .signboard::before{ left: 14px; }
+  .signboard::after{ right: 14px; }
+  .eyebrow-thai{
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .hero h1{
+    color: var(--paper);
+    font-size: clamp(38px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+  }
+  .hero .sub{
+    color: var(--herb-light);
+    font-size: clamp(16px, 2.2vw, 20px);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .hero-meta{
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(237,227,208,0.2);
+  }
+  .hero-meta div{
+    color: var(--paper);
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  .hero-meta strong{
+    display: block;
+    color: var(--gold);
+    font-family: 'Mitr', sans-serif;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  /* hanging tag under sign */
+  .hangtag{
+    text-align: center;
+    margin-top: -14px;
+    position: relative;
+    z-index: 2;
+  }
+  .hangtag span{
+    display: inline-block;
+    background: var(--signred);
+    color: var(--paper);
+    font-family: 'Mitr', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 22px;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  }
+
+  /* SECTION generic */
+  section{ padding: 56px 0; }
+  .section-head{
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .section-head .tag{
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    color: var(--signred);
+    display: block;
+  }
+  .section-head h2{
+    font-size: clamp(26px, 4vw, 34px);
+    color: var(--soy);
+    margin-top: 2px;
+  }
+  .rule{
+    width: 64px;
+    height: 3px;
+    background: var(--herb);
+    margin: 14px auto 0;
+    border-radius: 2px;
+  }
+
+  /* STORY */
+  .story{
+    background: var(--paper-dark);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .story-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .story p{
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .story p:first-of-type::first-letter{
+    font-family: 'Mitr', sans-serif;
+    font-size: 46px;
+    font-weight: 700;
+    color: var(--signred);
+    float: left;
+    line-height: 0.8;
+    margin: 6px 8px 0 0;
+  }
+  .herb-callout{
+    background: var(--paper);
+    border: 1px dashed var(--herb);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .herb-callout h3{
+    color: var(--herb);
+    font-size: 18px;
+    margin-bottom: 8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .herb-callout p{ font-size: 14.5px; line-height: 1.75; color: var(--ink); opacity: 0.9; }
+
+  /* MENU */
+  .menu-tabs{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .menu-tab{
+    font-family: 'Mitr', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--soy);
+    background: var(--paper-dark);
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .menu-tab:hover{ background: var(--herb-light); color: #fff; }
+  .menu-tab.active{
+    background: var(--signred);
+    border-color: var(--signred);
+    color: var(--paper);
+  }
+  .menu-panel{ display: none; }
+  .menu-panel.active{ display: block; }
+
+  .menu-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .menu-card{
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0 0 22px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .menu-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(58,36,24,0.1);
+  }
+  .menu-card .badge{
+    position: absolute;
+    top: 10px; right: 18px;
+    background: var(--signred);
+    color: var(--paper);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    z-index: 2;
+  }
+  /* photo placeholder — swap the <img> src inside .photo-slot to use a real photo */
+  .photo-slot{
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--paper-dark);
+    border-bottom: 1px dashed var(--herb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .photo-slot img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-slot .placeholder-mark{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--herb);
+    opacity: 0.55;
+  }
+  .photo-slot .placeholder-mark svg{ width: 34px; height: 34px; }
+  .photo-slot .placeholder-mark span{
+    font-size: 12px;
+    font-family: 'Mitr', sans-serif;
+  }
+  .menu-card .card-body{
+    padding: 20px 24px 0;
+  }
+  .menu-card h3{
+    font-size: 19px;
+    color: var(--soy);
+    margin-bottom: 6px;
+  }
+  .menu-card p{
+    font-size: 14.5px;
+    color: var(--ink);
+    opacity: 0.82;
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  .menu-card .price{
+    font-family: 'Mitr', sans-serif;
+    font-weight: 600;
+    color: var(--herb);
+    font-size: 16px;
+  }
+  .menu-note{
+    text-align: center;
+    margin-top: 28px;
+    font-size: 14px;
+    color: var(--ink);
+    opacity: 0.65;
+    font-style: italic;
+  }
+
+  /* MAP / SIGNATURE SECTION */
+  .findus{
+    background: var(--soy);
+    color: var(--paper);
+  }
+  .findus .section-head h2{ color: var(--paper); }
+  .findus .section-head .tag{ color: var(--gold); }
+  .findus .rule{ background: var(--gold); }
+  .find-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .alley-frame{
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    transform: rotate(0.6deg);
+  }
+  .alley-frame svg{ display:block; width:100%; height:auto; }
+  .find-info p{
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 18px;
+    opacity: 0.92;
+  }
+  .info-row{
+    display: flex;
+    gap: 14px;
+    margin-bottom: 18px;
+    align-items: flex-start;
+  }
+  .info-row .ico{
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(201,154,74,0.18);
+    border: 1px solid var(--gold);
+    flex-shrink: 0;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold);
+    font-family: 'Mitr', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .info-row strong{
+    display:block;
+    font-family: 'Mitr', sans-serif;
+    font-size: 15px;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+  .info-row span{ font-size: 14.5px; opacity: 0.85; line-height:1.6; }
+  .cta-row{ margin-top: 26px; display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-family: 'Mitr', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .btn:hover{ opacity: 0.85; }
+  .btn-primary{
+    background: var(--signred);
+    color: var(--paper);
+  }
+  .btn-ghost{
+    border: 1px solid var(--gold);
+    color: var(--gold);
+  }
+
+  /* REVIEWS */
+  .reviews{ background: var(--paper); }
+  .review-strip{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .review-card{
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .review-card::before{
+    content: "“";
+    font-family: 'Mitr', sans-serif;
+    font-size: 42px;
+    color: var(--signred);
+    opacity: 0.25;
+    position: absolute;
+    top: 4px; left: 14px;
+    line-height: 1;
+  }
+  .review-card p{
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin: 18px 0 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .review-card .who{
+    font-size: 13px;
+    color: var(--herb);
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  footer{
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 36px 24px 28px;
+    font-size: 13.5px;
+    opacity: 0.85;
+  }
+  footer .fname{
+    font-family: 'Mitr', sans-serif;
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 760px){
+    .story-grid, .find-grid{ grid-template-columns: 1fr; gap: 28px; }
+    .menu-grid{ grid-template-columns: 1fr; }
+    .review-strip{ grid-template-columns: 1fr; }
+    .hero{ padding: 40px 0 28px; }
+    .signboard{ padding: 36px 22px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ropestripe"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="signboard">
+      <span class="eyebrow-thai">ร้านเก่าแก่เมืองขลุง · เปิดมาหลายสิบปี</span>
+      <h1>ก๋วยเตี๋ยวเจ๊อัพ</h1>
+      <div class="sub">หมูเลียง · เนื้อเลียง · ขาหมู สูตรเร่วหอมแท้ๆ แบบคนขลุง</div>
+      <div class="hero-meta">
+        <div><strong>10:00 – 16:00</strong>ปิดทุกวันอาทิตย์</div>
+        <div><strong>60.-</strong>ราคาเฉลี่ยต่อคน</div>
+        <div><strong>ซอย 3</strong>เทศบาลสาย 2 เมืองขลุง</div>
+      </div>
+    </div>
+  </div>
+  <div class="hangtag"><span>มากี่ครั้งก็ต้องหลงซอยก่อนถึงร้าน</span></div>
+</header>
+
+<section class="story">
+  <div class="wrap story-grid">
+    <div>
+      <div class="section-head" style="text-align:left; margin-bottom:20px;">
+        <span class="tag">เรื่องของร้าน</span>
+        <h2 style="margin-top:2px;">ร้านป้าในซอยที่ใครมาขลุงต้องถาม</h2>
+      </div>
+      <p>เมืองขลุงเป็นเมืองเก่าแก่ ตึกแถวเรียงตัวกันมานาน ในซอยเล็กๆ ที่คนไม่คุ้นทางขับเข้ามาแล้วหลงกันเป็นประจำ มีร้านก๋วยเตี๋ยวเล็กๆ ที่เปิดขายมานานหลายสิบปี เจ้าของร้านทุกคนเรียกกันติดปากว่า "ป้าหรือเจ๊" รสมือไม่เปลี่ยนตามยุค น้ำซุปไม่หวานไม่เค็ม กำลังดีแบบที่คนกินซ้ำได้ทุกวัน</p>
+    </div>
+    <div class="herb-callout">
+      <h3>เร่วหอม หัวใจของน้ำซุป</h3>
+      <p>ก๋วยเตี๋ยวหมูเลียง เป็นอีกเมนูหนึ่งที่มีความเฉพาะของภาคตะวันออก โดยเฉพาะในจังหวัด"จันทบุรี" คำว่า"เลียง"นั้นหมายถึงอาหารอะไรก็ตามที่ต้องโขลกกับครก ความพิเศษของก๋วยเตี๋ยวอยู่ที่น้ำซุปที่หวานและหอมด้วยเร่วหอม ซึ่งเป็นพืชท้องถิ่นของภาคตะวันออกลักษณะคล้ายข่า มีกลิ่นหอมนำมาโขลกทำเป็นน้ำซุปและส่วนผสมสมุนไหรอื่นๆอีกมากมาย</p>
+    </div>
+  </div>
+</section>
+
+<section class="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">สั่งอะไรดี</span>
+      <h2>เมนูแนะนำ</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="menu-tab active" data-panel="panel-noodle" onclick="showMenuPanel('panel-noodle', this)">เมนูก๋วยเตี๋ยว</button>
+      <button class="menu-tab" data-panel="panel-snack" onclick="showMenuPanel('panel-snack', this)">ของทอด</button>
+      <button class="menu-tab" data-panel="panel-juice" onclick="showMenuPanel('panel-juice', this)">น้ำปั่น</button>
+    </div>
+
+    <div class="menu-panel active" id="panel-noodle">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <span class="badge">เมนูซิกเนเจอร์</span>
+          <!-- เปลี่ยนรูป: ใส่ <img src="รูปของคุณ.jpg" alt="ก๋วยเตี๋ยวหมูเลียง"> แทนที่ <div class="placeholder-mark">...</div> ด้านล่าง -->
+          <div class="photo-slot">
+            <img src="เลียง.jpg" alt="ก๋วยเตี๋ยวหมูเลียง">
+          </div>
+          <div class="card-body">
+            <h3>ก๋วยเตี๋ยวหมูเลียง</h3>
+            <p>น้ำซุปใส่เร่วหอม สับปะรด ผักชีฝรั่ง รสกลมกล่อม หอมสมุนไพรแบบฉบับคนขลุง</p>
+            <div class="price">35 – 50 บาท</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="หมู.jpg" alt="ก๋วยเตี๋ยวหมูเลียง">
+          </div>
+          <div class="card-body">
+            <h3>เนื้อเลียง</h3>
+            <p>เนื้อตุ๋นนุ่ม น้ำซุปสูตรเดียวกับหมูเลียง เข้มข้นกว่าเล็กน้อย</p>
+            <div class="price">40 – 50 บาท</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="หมี่เหลืองเย็นตาโฟ.jpg" alt="ก๋วยเตี๋ยวหมี่เหลืองเย็นตาโฟ">
+          </div>
+          <div class="card-body">
+            <h3>เส้นเล็กเนื้อเปื่อยน้ำดำ</h3>
+            <p>เส้นเล็กนุ่ม เนื้อเปื่อยละลายในปาก น้ำดำกำลังดี ไม่หวานไม่เค็มเกินไป</p>
+            <div class="price">เริ่มต้น 60 บาท</div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="หมี่ขาวเนื้อเปื่อน.jpg" alt="ก๋วยเตี๋ยวหมี่ขาวเนื้อเปื่อย">
+          </div>
+          <div class="card-body">
+            <h3>เนื้อเลียง</h3>
+            <p>เนื้อตุ๋นนุ่ม น้ำซุปสูตรเดียวกับหมูเลียง เข้มข้นกว่าเล็กน้อย</p>
+            <div class="price">50 – 60 บาท</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="เล็กเนื้อเปื่อย.jpg" alt="ก๋วยเตี๋ยวเส้นเล็กเนื้อเปื่อย">
+          </div>
+          <div class="card-body">
+            <h3>ก๋วยเตี๋ยวขาหมู</h3>
+            <p>ขาหมูตุ๋นเปื่อย เคี่ยวจนน้ำซุปข้น หอมเครื่องเทศ เสิร์ฟกับเส้นที่เลือกได้</p>
+            <div class="price">40 – 50 บาท</div>
+          </div>
+        </div>
+      </div>
+      <p class="menu-note">มีไส้กรอกขนมปังและเครื่องเคียงเพิ่ม สั่งเสริมได้ตามใจชอบ</p>
+    </div>
+
+    <div class="menu-panel" id="panel-snack">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <span class="badge">ขายดี</span>
+          <div class="photo-slot">
+            <img src="ขนมปังแฝด.jpg" alt="ขนมปังแฝด">
+          </div>
+          <div class="card-body">
+            <h3>ขนมปังแฝดทอด</h3>
+            <p>เสิร์ฟพร้อมขนมปัง สั่งเสริมข้างชามก๋วยเตี๋ยวได้</p>
+            <div class="price">15 บาท</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="ไส้กรอกแดงแท่ง.png" alt="ไส้กรอกแดงแท่ง">
+          </div>
+          <div class="card-body">
+            <h3>ไส้กรอกแดงแท่ง</h3>
+            <p></p>
+            <div class="price">10 บาท</div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="แดงหั่น.png" alt="ขนมปังแฝด">
+          </div>
+          <div class="card-body">
+            <h3>ไส้กรอกแดงหั่น</h3>
+            <p></p>
+            <div class="price">10 บาท</div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="ไส้กรอกชีส.png" alt="ขนมปังแฝด">
+          </div>
+          <div class="card-body">
+            <h3>ไส้กรอกชีส</h3>
+            <p></p>
+            <div class="price">10 บาท</div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="ส้มสามลูก.png" alt="ขนมปังแฝด">
+          </div>
+          <div class="card-body">
+            <h3>ส้มสามลูก</h3>
+            <p></p>
+            <div class="price">10 บาท</div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="photo-slot">
+            <img src="ส้มสามลูกใหญ่.png" alt="ขนมปังแฝด">
+          </div>
+          <div class="card-body">
+            <h3>ส้มสามลูกใหญ่</h3>
+            <p></p>
+            <div class="price">10 บาท</div>
+          </div>
+        </div>
+      </div>
+      <p class="menu-note">เมนูของกินเล่น สั่งแยกหรือสั่งคู่กับก๋วยเตี๋ยวก็ได้</p>
+    </div>
+    <div class="menu-panel" id="panel-juice">
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="photo-slot">
+        <img src="น้ำมะปี๊ด.jpg" alt="น้ำมะปี๊ด">
+      </div>
+      <div class="card-body">
+        <h3>น้ำมะปี๊ด</h3>
+        <p>เปรี้ยวหวานชื่นใจ คั้นสดทุกแก้ว</p>
+        <div class="price">20 บาท</div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="photo-slot">
+        <img src="กาแฟเย็น.jpg" alt="กาแฟเย็น">
+      </div>
+      <div class="card-body">
+        <h3>กาแฟเย็น</h3>
+        <p>ตื่น สดชื่น</p>
+        <div class="price">25 บาท</div>
+      </div>
+    </div>
+  </div>
+  <p class="menu-note">น้ำปั่นทุกแก้วคั้นสดวันต่อวัน</p>
+</div>
+</section>
+
+<section class="findus" id="find">
+  <div class="wrap find-grid">
+    <div>
+      <div class="section-head" style="text-align:left; margin-bottom:20px;">
+        <span class="tag">หาทางมาร้าน</span>
+        <h2>หลงซอยได้ แต่ห้ามพลาดร้าน</h2>
+      </div>
+      <div class="alley-frame">
+        <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แผนที่สเก็ตช์มือวาดแสดงเส้นทางจากถนนเทศบาลสาย 2 เข้าซอย 3 ไปยังร้านก๋วยเตี๋ยวเจ๊อัพ">
+          <rect width="380" height="300" fill="#EDE3D0"/>
+          <path d="M10 60 H 370" stroke="#3A2418" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <text x="20" y="48" font-family="Mitr, sans-serif" font-size="13" fill="#3A2418">ถ.เทศบาลสาย 2</text>
+
+          <rect x="40" y="70" width="26" height="40" fill="none" stroke="#3A2418" stroke-width="2"/>
+          <rect x="80" y="70" width="26" height="40" fill="none" stroke="#3A2418" stroke-width="2"/>
+          <rect x="120" y="70" width="26" height="40" fill="none" stroke="#3A2418" stroke-width="2"/>
+          <text x="40" y="120" font-family="Sarabun, sans-serif" font-size="10" fill="#6B7654">ตึกแถวเก่า</text>
+
+          <path d="M133 60 C 130 100, 150 120, 145 160 C 140 200, 170 220, 200 240"
+                stroke="#A23B2E" stroke-width="3" fill="none" stroke-dasharray="6 5" stroke-linecap="round"/>
+
+          <circle cx="133" cy="60" r="5" fill="#A23B2E"/>
+          <text x="142" y="55" font-family="Mitr, sans-serif" font-weight="600" font-size="12" fill="#A23B2E">ซอย 3 เริ่มที่นี่</text>
+
+          <path d="M145 160 C 100 165, 95 190, 60 195" stroke="#3A2418" stroke-width="1.6" fill="none" stroke-dasharray="3 4" opacity="0.55"/>
+          <text x="20" y="210" font-family="Caveat, cursive" font-size="16" fill="#6B7654" transform="rotate(-6 60 195)">ทางตันนะ อย่าเลี้ยว</text>
+
+          <path d="M200 240 C 215 250, 230 245, 245 255" stroke="#3A2418" stroke-width="1.6" fill="none" stroke-dasharray="3 4" opacity="0.55"/>
+          <text x="240" y="280" font-family="Caveat, cursive" font-size="16" fill="#6B7654">ทางตันเหมือนกัน</text>
+
+          <circle cx="200" cy="240" r="9" fill="#6B7654"/>
+          <circle cx="200" cy="240" r="9" fill="none" stroke="#EDE3D0" stroke-width="2"/>
+          <text x="172" y="226" font-family="Mitr, sans-serif" font-weight="700" font-size="13" fill="#6B7654">ป้าย "เจ๊อัพ"</text>
+
+          <g transform="translate(225,225) rotate(8)">
+            <rect x="0" y="0" width="58" height="34" rx="3" fill="#A23B2E"/>
+            <text x="29" y="14" text-anchor="middle" font-family="Mitr, sans-serif" font-weight="600" font-size="9.5" fill="#EDE3D0">ก๋วยเตี๋ยว</text>
+            <text x="29" y="26" text-anchor="middle" font-family="Mitr, sans-serif" font-weight="600" font-size="9.5" fill="#EDE3D0">เจ๊อัพ</text>
+          </g>
+
+          <text x="14" y="295" font-family="Caveat, cursive" font-size="15" fill="#3A2420" opacity="0.7">เคล็ดลับ: ถ้าหลง ให้ถามร้านค้าในซอย ใครๆก็รู้จัก</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="find-info">
+      <div class="info-row">
+        <div class="ico">ที่</div>
+        <div>
+          <strong>ที่ตั้ง</strong>
+          <span>89 ถ.เทศบาลสาย 2 ซอย 3 ต.ขลุง อ.ขลุง จ.จันทบุรี 22110</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ico">เวลา</div>
+        <div>
+          <strong>เวลาเปิด-ปิด</strong>
+          <span>ทุกวัน 10:00 – 16:00 น. (แนะนำให้โทรเช็คก่อนแวะ เผื่อวันหยุดพิเศษ)</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ico">โทร</div>
+        <div>
+          <strong>เบอร์ติดต่อ</strong>
+          <span>095-572-7712</span>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=89+%E0%B8%96.%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B8%AA%E0%B8%B2%E0%B8%A2+2+%E0%B8%8B%E0%B8%AD%E0%B8%A2+3+%E0%B8%95.%E0%B8%82%E0%B8%A5%E0%B8%B8%E0%B8%87+%E0%B8%AD.%E0%B8%82%E0%B8%A5%E0%B8%B8%E0%B8%87+%E0%B8%88.%E0%B8%88%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5" target="_blank" rel="noopener">เปิด Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">คนกินว่าไง</span>
+      <h2>เสียงจากลูกค้า</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="review-strip">
+      <div class="review-card">
+        <p>เส้นเล็กเนื้อเปื่อยน้ำดำ กำลังดีไม่หวานไม่เค็ม ขับหลงในซอยจริงแต่คุ้มมาก กลับมากินซ้ำแน่นอน</p>
+        <div class="who">— ลูกค้าประจำ</div>
+      </div>
+      <div class="review-card">
+        <p>หมูเลียงน้ำซุปหอมเร่วหอมจัดๆ กินแล้วรู้เลยว่าเป็นสูตรโบราณของแท้ ไม่เหมือนที่ไหน</p>
+        <div class="who">— </div>
+      </div>
+      <div class="review-card">
+        <p>ร้านเก่าแก่ รสชาติเด็ดมาตลอด ราคาเป็นมิตร เหมาะมาคู่กับขนมปังไส้นมที่ร้านขายเสริม</p>
+        <div class="who">— </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">ก๋วยเตี๋ยวเจ๊อัพ เมืองขลุง</div>
+  <div>89 ถ.เทศบาลสาย 2 ซอย 3 ต.ขลุง อ.ขลุง จ.จันทบุรี 22110 · เปิดทุกวัน 10:00–16:00 น.</div>
+</footer>
+
+<script>
+  function showMenuPanel(panelId, btn) {
+    document.querySelectorAll('.menu-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    document.querySelectorAll('.menu-tab').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    document.getElementById(panelId).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+
+</html>
